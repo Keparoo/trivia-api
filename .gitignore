@@ -2,6 +2,46 @@
 __pycache__
 venv
 /bookshelf_examples
+/node
+
+### Flask ###
+instance/*
+!instance/.gitignore
+.webassets-cache
+.env
+### Flask.Python Stack ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+# Environments
+# .env
+.env/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Flask stuff:
+instance/
 
 # OS generated files #
 ######################
