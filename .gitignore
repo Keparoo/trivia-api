@@ -2,18 +2,26 @@
 __pycache__
 venv
 /bookshelf_examples
-/node
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
 
 ### Flask ###
 instance/*
 !instance/.gitignore
 .webassets-cache
 .env
+
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
 # Environments
 # .env
 .env/
