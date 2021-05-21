@@ -43,19 +43,6 @@ def create_app(test_config=None):
   Create an endpoint to handle GET requests 
   for all available categories.
   '''
-  @app.route('/questions')
-  def retrieve_questions():
-    selection = Question.query.order_by(Question.id).all()
-    current_questions = paginate_questions(request, selection)
-
-    if len(current_questions) == 0:
-      abort(404)
-
-    return jsonify({
-      'success': True,
-      'questions': current_questions,
-      'total_questions': len(Question.query.all())
-    })
 
   '''
   @TODO: 
@@ -69,7 +56,24 @@ def create_app(test_config=None):
   ten questions per page and pagination at the bottom of the screen for three pages.
   Clicking on the page numbers should update the questions. 
   '''
+  @app.route('/questions')
+  def retrieve_questions():
+    selection = Question.query.order_by(Question.id).all()
+    current_questions = paginate_questions(request, selection)
+    cat_selection = Category.query.order_by(Category.id).all()
+    categories = [category.format() for category in cat_selection]
+    cat_dict = {item['id']:item['type'] for item in categories}
 
+
+    if len(current_questions) == 0:
+      abort(404)
+
+    return jsonify({
+      'success': True,
+      'questions': current_questions, 
+      'total_questions': len(Question.query.all()),
+      'categories': cat_dict
+    })
   '''
   @TODO: 
   Create an endpoint to DELETE question using a question ID. 
