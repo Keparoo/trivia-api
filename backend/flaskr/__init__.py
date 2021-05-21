@@ -43,7 +43,19 @@ def create_app(test_config=None):
   Create an endpoint to handle GET requests 
   for all available categories.
   '''
+  @app.route('/questions')
+  def retrieve_questions():
+    selection = Question.query.order_by(Question.id).all()
+    current_questions = paginate_questions(request, selection)
 
+    if len(current_questions) == 0:
+      abort(404)
+
+    return jsonify({
+      'success': True,
+      'questions': current_questions,
+      'total_questions': len(Question.query.all())
+    })
 
   '''
   @TODO: 
