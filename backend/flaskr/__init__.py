@@ -45,16 +45,14 @@ def create_app(test_config=None):
   '''
   @app.route('/categories')
   def retrieve_categories():
-    cat_selection = Category.query.order_by(Category.id).all()
-    categories = [category.format() for category in cat_selection]
-    cat_dict = {item['id']:item['type'] for item in categories}
+    categories = Category.query.order_by(Category.id).all()
 
     if len(categories) == 0:
       abort(404)
 
     return jsonify({
       'success': True,
-      'categories': cat_dict
+      'categories': {category.id: category.type for category in categories}
     })
   '''
   @TODO: 
@@ -72,19 +70,22 @@ def create_app(test_config=None):
   def retrieve_questions():
     selection = Question.query.order_by(Question.id).all()
     current_questions = paginate_questions(request, selection)
-    cat_selection = Category.query.order_by(Category.id).all()
-    categories = [category.format() for category in cat_selection]
-    cat_dict = {item['id']:item['type'] for item in categories}
-
-
     if len(current_questions) == 0:
       abort(404)
+
+    categories = Category.query.order_by(Category.id).all()
+    if len(categories) == 0:
+      abort(404)
+    # cat_selection = Category.query.order_by(Category.id).all()
+    # categories = [category.format() for category in cat_selection]
+    # cat_dict = {item['id']:item['type'] for item in categories}
+
 
     return jsonify({
       'success': True,
       'questions': current_questions, 
       'total_questions': len(Question.query.all()),
-      'categories': cat_dict
+      'categories': {category.id: category.type for category in categories}
     })
   '''
   @TODO: 
