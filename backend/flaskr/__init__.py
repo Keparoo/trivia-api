@@ -122,7 +122,29 @@ def create_app(test_config=None):
   categories in the left column will cause only questions of that 
   category to be shown. 
   '''
+  @app.route('/categories/<int:cat_id>/questions', methods=['GET'])
+  def retrieve_questions_by_category(cat_id):
+    
+    try:
+      category = Category.query.filter_by(id=cat_id).one_or_none().format()['type']
+    except:
+      abort(404)
 
+    
+    try:
+
+      questions = Question.query.filter(Question.category == str(cat_id)).all()
+      current_questions = paginate_questions(request, questions)
+
+      return jsonify({
+        'success': True,
+        'questions': current_questions, 
+        'total_questions': len(questions),
+        'current_category': category
+      })
+
+    except:
+      abort(404)
 
   '''
   @TODO: 
@@ -148,7 +170,23 @@ def create_app(test_config=None):
           "error": 404,
           "message": "resource not found"
       }), 404
-      
+  
+  @app.errorhandler(422)
+  def unprocessable(error):
+      return jsonify({
+          "success": False,
+          "error": 422,
+          "message": "unprocessable"
+      }), 422
+
+  @app.errorhandler(400)
+  def bad_request(error):
+      return jsonify({
+          "success": False,
+          "error": 400,
+          "message": "bad request"
+      }), 400
+
   return app
 
     
