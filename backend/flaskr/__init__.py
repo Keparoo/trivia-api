@@ -127,13 +127,12 @@ def create_app(test_config=None):
     
     try:
       category = Category.query.filter_by(id=cat_id).one_or_none().format()['type']
+    
     except:
       abort(404)
 
-    
     try:
-
-      questions = Question.query.filter(Question.category == str(cat_id)).all()
+      questions = Question.query.filter(Question.category == cat_id).all()
       current_questions = paginate_questions(request, questions)
 
       return jsonify({
