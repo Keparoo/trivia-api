@@ -76,16 +76,13 @@ def create_app(test_config=None):
     categories = Category.query.order_by(Category.id).all()
     if len(categories) == 0:
       abort(404)
-    # cat_selection = Category.query.order_by(Category.id).all()
-    # categories = [category.format() for category in cat_selection]
-    # cat_dict = {item['id']:item['type'] for item in categories}
-
 
     return jsonify({
       'success': True,
       'questions': current_questions, 
-      'total_questions': len(Question.query.all()),
-      'categories': {category.id: category.type for category in categories}
+      'total_questions': len(selection),
+      'categories': {category.id: category.type for category in categories},
+      'current_category': None
     })
   '''
   @TODO: 
