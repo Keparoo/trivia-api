@@ -138,10 +138,6 @@ def create_app(test_config=None):
       if search_term:
         selection = Question.query.order_by(Question.id).filter(Question.question.ilike(f'%{search_term}%'))
 
-        # send 404 if no results are found
-        if (len(selection) == 0):
-          abort(404)
-
         current_questions = paginate_questions(request, selection)
 
         return jsonify({
