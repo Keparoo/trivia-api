@@ -35,7 +35,9 @@ def create_app(test_config=None):
   QUESTIONS_PER_PAGE = 10
 
   def paginate_questions(request, selection):
-    ''' paginate questions in selection '''
+    '''
+    Paginate questions in selection
+    '''
 
     page = request.args.get('page', 1, type=int)
     start =  (page - 1) * QUESTIONS_PER_PAGE
@@ -124,26 +126,7 @@ def create_app(test_config=None):
 
     except:
       abort(422)
-  '''
-  @TODO: 
-  Create an endpoint to POST a new question, 
-  which will require the question and answer text, 
-  category, and difficulty score.
 
-  TEST: When you submit a question on the "Add" tab, 
-  the form will clear and the question will appear at the end of the last page
-  of the questions list in the "List" tab.  
-  '''
-  '''
-  @TODO: 
-  Create a POST endpoint to get questions based on a search term. 
-  It should return any questions for whom the search term 
-  is a substring of the question. 
-
-  TEST: Search by any phrase. The questions list will update to include 
-  only question that include that string within their question. 
-  Try using the word "title" to start. 
-  '''
   @app.route('/questions', methods=['POST'])
   def post_question():
     '''
@@ -161,6 +144,7 @@ def create_app(test_config=None):
     '''
     body = request.get_json()
 
+    # Parse body data
     new_question = body.get('question', None)
     new_answer = body.get('answer', None)
     new_difficulty = body.get('difficulty', None)
@@ -198,15 +182,6 @@ def create_app(test_config=None):
     except:
       abort(422)
 
-  '''
-  @TODO: 
-  Create a GET endpoint to get questions based on category. 
-
-  TEST: In the "List" tab / main screen, clicking on one of the 
-  categories in the left column will cause only questions of that 
-  category to be shown. 
-  '''
-
   @app.route('/categories/<int:cat_id>/questions', methods=['GET'])
   def retrieve_questions_by_category(cat_id):
     '''
@@ -222,8 +197,6 @@ def create_app(test_config=None):
     # return 400 if no category exists
     if (category is None):
       abort(400)
-
-    # category = selection.format()['type']
 
     try:
       questions = Question.query.filter(Question.category == cat_id).all()
@@ -250,7 +223,7 @@ def create_app(test_config=None):
 
     body = request.get_json()
 
-    # parse body data
+    # Parse body data
     previous_questions = body.get('previous_questions', None)
     category = body.get('quiz_category', None)
 
