@@ -105,9 +105,7 @@ def create_app(test_config=None):
 
       return jsonify({
         'success': True,
-        'deleted': question_id,
-        'books': current_questions,
-        'total_books': len(Question.query.all())
+        'deleted': question_id
       })
 
     except:

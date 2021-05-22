@@ -106,6 +106,45 @@ class TriviaTestCase(unittest.TestCase):
 
       self.assertTrue(len(num_questions_after) == len(num_questions_before))
 
+    def test_delete_question(self):
+      '''Tests delete_question success'''
+
+      # create a question to delete
+      question = Question(question=self.test_question['question'], answer=self.test_question['answer'], category=self.test_question['category'], difficulty=self.test_question['difficulty'])
+
+      question.insert()
+      question_id = question.id
+
+      num_questions_before = Question.query.all()
+
+      res = self.client().delete(f'/questions/{question_id}')
+      data = json.loads(res.data)
+
+      num_questions_after = Question.query.all()
+
+      question = Question.query.filter(Question.id == 1).one_or_none()
+
+      self.assertEqual(res.status_code, 200)
+      self.assertEqual(data['success'], True)
+      self.assertTrue(len(num_questions_before) - len(num_questions_after) == 1)
+      self.assertEqual(data['deleted'], question_id)
+      self.assertEqual(question, None)
+
+    def test_delete_non_existant_question(self):
+      '''Tests deletinging non-existant question returns 422'''
+
+      num_questions_before = Question.query.all()
+
+      res = self.client().delete(f'/questions/1000')
+      data = json.loads(res.data)
+
+      num_questions_after = Question.query.all()
+
+      self.assertEqual(res.status_code, 422)
+      self.assertEqual(data['success'], False)
+      self.assertTrue(len(num_questions_before) == len(num_questions_after))
+
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
