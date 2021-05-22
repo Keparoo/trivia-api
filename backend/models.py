@@ -1,3 +1,6 @@
+#----------------------------------------------------------------------------#
+# Imports
+#----------------------------------------------------------------------------#
 import os
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
@@ -8,10 +11,9 @@ database_path = "postgresql://{}:{}@{}/{}".format('postgres','password','localho
 
 db = SQLAlchemy()
 
-'''
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
-'''
+#----------------------------------------------------------------------------#
+# Setup database: bind flask app to SQLAlchemy service
+#----------------------------------------------------------------------------#
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -19,10 +21,9 @@ def setup_db(app, database_path=database_path):
     db.init_app(app)
     db.create_all()
 
-'''
-Question
-
-'''
+#----------------------------------------------------------------------------#
+# Question table
+#----------------------------------------------------------------------------#
 class Question(db.Model):  
   __tablename__ = 'questions'
 
@@ -58,10 +59,9 @@ class Question(db.Model):
       'difficulty': self.difficulty
     }
 
-'''
-Category
-
-'''
+#----------------------------------------------------------------------------#
+# Category Table
+#----------------------------------------------------------------------------#
 class Category(db.Model):  
   __tablename__ = 'categories'
 
