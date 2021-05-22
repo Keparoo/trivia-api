@@ -18,6 +18,14 @@ class TriviaTestCase(unittest.TestCase):
         self.database_path = "postgresql://{}:{}@{}/{}".format('postgres','password','localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
+        # new question for testing create question
+        self.test_question = {
+          'question': 'Which particle binds quarks in a nucleus',
+          'answer': 'gluon',
+          'difficulty': 4,
+          'category': '1'
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -69,6 +77,34 @@ class TriviaTestCase(unittest.TestCase):
       self.assertEqual(data['success'], False)
       self.assertEqual(data['message'], 'resource not found')
 
+    def test_create_question(self):
+      '''Tests create_question success'''
+
+      num_questions_before = Question.query.all()
+
+      res = self.client().post('/questions', json=self.test_question)
+      data = json.loads(res.data)
+
+      num_questions_after = Question.query.all()
+      
+      self.assertEqual(res.status_code, 200)
+      self.assertEqual(data['success'], True)
+      self.assertTrue(len(num_questions_after) - len(num_questions_before) == 1)
+
+    def test_422_create_question_fails(self):
+      '''Tests create_question failure sends 422'''
+
+      num_questions_before = Question.query.all()
+
+      res = self.client().post('/questions', json={})
+      data = json.loads(res.data)
+
+      num_questions_after = Question.query.all()
+
+      self.assertEqual(res.status_code, 422)
+      self.assertEqual(data['success'], False)
+
+      self.assertTrue(len(num_questions_after) == len(num_questions_before))
 
 # Make the tests conveniently executable
 if __name__ == "__main__":

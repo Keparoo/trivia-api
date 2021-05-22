@@ -110,14 +110,10 @@ def create_app(test_config=None):
     new_answer = body.get('answer', None)
     new_difficulty = body.get('difficulty', None)
     new_category = body.get('category', None)
-    # search = body.get('search', None)
 
     try: 
       question = Question(question=new_question, answer=new_answer, difficulty=new_difficulty, category=new_category)
       question.insert()
-
-      # selection = Book.query.order_by(Book.id).all()
-      # current_books = paginate_books(request, selection)
 
       return jsonify({
         'success': True
