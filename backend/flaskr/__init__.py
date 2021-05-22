@@ -120,6 +120,16 @@ def create_app(test_config=None):
   the form will clear and the question will appear at the end of the last page
   of the questions list in the "List" tab.  
   '''
+  '''
+  @TODO: 
+  Create a POST endpoint to get questions based on a search term. 
+  It should return any questions for whom the search term 
+  is a substring of the question. 
+
+  TEST: Search by any phrase. The questions list will update to include 
+  only question that include that string within their question. 
+  Try using the word "title" to start. 
+  '''
   @app.route('/questions', methods=['POST'])
   def post_question():
     '''
@@ -164,16 +174,7 @@ def create_app(test_config=None):
     except:
       abort(422)
 
-  '''
-  @TODO: 
-  Create a POST endpoint to get questions based on a search term. 
-  It should return any questions for whom the search term 
-  is a substring of the question. 
 
-  TEST: Search by any phrase. The questions list will update to include 
-  only question that include that string within their question. 
-  Try using the word "title" to start. 
-  '''
 
   '''
   @TODO: 
@@ -183,6 +184,7 @@ def create_app(test_config=None):
   categories in the left column will cause only questions of that 
   category to be shown. 
   '''
+
   @app.route('/categories/<int:cat_id>/questions', methods=['GET'])
   def retrieve_questions_by_category(cat_id):
     
@@ -217,6 +219,49 @@ def create_app(test_config=None):
   one question at a time is displayed, the user is allowed to answer
   and shown whether they were correct or not. 
   '''
+
+  @app.route('/quizzes', methods=['POST'])
+  def get_quiz_question():
+    ''' Handles POST request for playing the quiz game '''
+
+    body = request.get_json()
+
+    previous_questions = body.get('previous_questions', None)
+    category = body.get('quiz_category', None)
+
+    # Check that all fields have data
+    if ((category is None) or (previous_questions is None)):
+      abort(400)
+
+    # load questions from all categories
+    if (category['id'] == 0):
+      questions = Question.query.all()
+
+    # load questions for specific category
+    else:
+      questions = Question.query.filter_by(category=category['id']).all()
+
+    random.shuffle(questions)
+
+    # find question that hasn't been asked
+    found = False
+    for question in questions:
+      if not question.id in previous_questions:
+        found = True
+        break
+    
+    # All questions have been asked or less than 5 questions in category
+    if not found:
+      return jsonify({
+      'success': True,
+      'question': None
+    })
+    
+    # return unasked question
+    return jsonify({
+      'success': True,
+      'question': question.format()
+    })
 
   '''
   @TODO: 
