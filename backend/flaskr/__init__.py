@@ -111,6 +111,10 @@ def create_app(test_config=None):
     new_difficulty = body.get('difficulty', None)
     new_category = body.get('category', None)
 
+    # make sure no fields are empty
+    if ((new_question is None) or (new_answer is None) or (new_difficulty is None) or (new_category is None)):
+      abort(422)
+
     try: 
       question = Question(question=new_question, answer=new_answer, difficulty=new_difficulty, category=new_category)
       question.insert()
