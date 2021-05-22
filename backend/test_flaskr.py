@@ -156,6 +156,35 @@ class TriviaTestCase(unittest.TestCase):
       # check that number of results is 1
       self.assertEqual(len(data['questions']), 1)
 
+    def test_play_quiz(self):
+      '''Tests playing quiz successfully '''
+
+      res = self.client().post('/quizzes', json={'previous_questions': [17,18], 'quiz_category': {'type': 'Art', 'id': '2'}})
+
+      data = json.loads(res.data)
+
+      self.assertEqual(res.status_code, 200)
+      self.assertEqual(data['success'], True)
+
+      # test that a question is returned and is in correct category
+      self.assertTrue(data['question'])
+      self.assertEqual(data['question']['category'], 2)
+
+      # test that question returned has is not in previous_questions
+      self.assertNotEqual(data['question']['id'], 17)
+      self.assertNotEqual(data['question']['id'], 18)
+
+    def test_play_quiz_fails(self):
+      '''Tests playing quiz fails '''
+
+      res = self.client().post('/quizzes', json={})
+      data = json.loads(res.data)
+
+      # check response status code and message
+      self.assertEqual(res.status_code, 400)
+      self.assertEqual(data['success'], False)
+      self.assertEqual(data['message'], 'bad request')
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
