@@ -217,12 +217,13 @@ def create_app(test_config=None):
     the current category
     '''
     
-    try:
-      category = Category.query.filter_by(id=cat_id).one_or_none().format()['type']
-    
-    # return 404 if no category exists
-    except:
-      abort(404)
+    category = Category.query.filter_by(id=cat_id).one_or_none()
+      
+    # return 400 if no category exists
+    if (category is None):
+      abort(400)
+
+    # category = selection.format()['type']
 
     try:
       questions = Question.query.filter(Question.category == cat_id).all()
@@ -232,7 +233,7 @@ def create_app(test_config=None):
         'success': True,
         'questions': current_questions, 
         'total_questions': len(questions),
-        'current_category': category
+        'current_category': category.type
       })
 
     except:
