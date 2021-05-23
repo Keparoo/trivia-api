@@ -86,7 +86,8 @@ The API currently returns three classes of errors:
 
 * Returns a list of categories
 * Returns a success flag
-* Test: `curl http://127.0.0.1:5000/categories`
+* Test: `curl http://127.0.0.1:5000/categories`  
+Response body:
 
       {
           "categories": {
@@ -110,7 +111,8 @@ The API currently returns three classes of errors:
 * Optional URL request argument: `?page=`
 * Returns a success flag
 
-Test: `curl http://127.0.0.1:5000/questions`
+Test: `curl http://127.0.0.1:5000/questions`  
+Response body:
     
     {
       "categories": {
@@ -203,7 +205,8 @@ Test: `curl http://127.0.0.1:5000/questions`
 * Returns the id of the deleted question if successful
 * Returns a success flag
 
-Test: `curl http://127.0.0.1:5000/questions/3 -X DELETE`
+Test: `curl http://127.0.0.1:5000/questions/3 -X DELETE`  
+Response body:
 
       {
           "deleted": 3, 
@@ -224,7 +227,8 @@ If a search term is included in the request, the endpoint:
 * Returns the total number of matching questions
 * Returns a success flag
 
-Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "name"}'`
+Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "name"}'`  
+Response body:
 
     {
       "questions": [
@@ -253,7 +257,8 @@ If there is no search term in the request, the endpoint:
 * Returns the questions id
 * Returns a success flag
 
-Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{ "question": "Which particle binds quarks in a nucleus", "answer": "gluon", "difficulty": 4, "category": "1" }'`
+Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{ "question": "Which particle binds quarks in a nucleus", "answer": "gluon", "difficulty": 4, "category": "1" }'`  
+Response body:
 
     {
       "question_id": 32, 
@@ -268,7 +273,8 @@ Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: applicatio
 * Returns the total number or matching questions
 * Returns a success flag
 
-Test: `curl http://127.0.0.1:5000/categories/1/questions`
+Test: `curl http://127.0.0.1:5000/categories/1/questions`  
+Response body:
 
       {
           "current_category": "Science", 
@@ -308,7 +314,8 @@ Test: `curl http://127.0.0.1:5000/categories/1/questions`
 * Returns a JSON object with a random question not yet asked
 * Returns a success flag
 
-Test: `curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/json" -d '{"previous_questions": [17, 18], "quiz_category": {"type": "Art", "id": "2"}}'`
+Test: `curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/json" -d '{"previous_questions": [17, 18], "quiz_category": {"type": "Art", "id": "2"}}'`  
+Response body:
 
     {
       "question": {
