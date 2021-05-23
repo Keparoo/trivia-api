@@ -210,7 +210,7 @@ def create_app(test_config=None):
       })
 
     except:
-      abort(404)
+      abort(400)
 
   @app.route('/quizzes', methods=['POST'])
   def get_quiz_question():
