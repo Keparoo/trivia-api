@@ -98,8 +98,7 @@ def create_app(test_config=None):
       'success': True,
       'questions': current_questions, 
       'total_questions': len(selection),
-      'categories': {category.id: category.type for category in categories},
-      'current_category': None
+      'categories': {category.id: category.type for category in categories}
     })
 
   @app.route('/questions/<int:question_id>', methods=['DELETE'])
@@ -161,8 +160,7 @@ def create_app(test_config=None):
         return jsonify({
           'success': True,
           'questions': current_questions,
-          'total_questions': len(selection.all()),
-          'currentCategory': None
+          'total_questions': len(selection.all())
         })
       else:
       # if no search term, create an new question

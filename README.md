@@ -120,8 +120,7 @@ Test: `curl http://127.0.0.1:5000/questions`
         "4": "History", 
         "5": "Entertainment", 
        "6": "Sports"
-      }, 
-      "current_category": null, 
+      },
       "questions": [
         {
           "answer": "Apollo 13", 
@@ -228,7 +227,6 @@ If a search term is included in the request, the endpoint:
 Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "name"}'`
 
     {
-      "currentCategory": null, 
       "questions": [
         {
           "answer": "Muhammad Ali", 
