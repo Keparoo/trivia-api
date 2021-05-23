@@ -1,6 +1,6 @@
 # Full Stack Trivia API Project
 
-This project is a trivia game where users can test their knowledge in different trivia categories: Science, Art, Geography, History, Entertainment, and Sports. The goal of this project was to complete a RESTful API, test suite and documentation that implements the following functionality:
+This project is a trivia game where users can test their knowledge in different trivia categories: *Science, Art, Geography, History, Entertainment, and Sports*. The goal of this project was to complete a RESTful API, test suite and documentation that implements the following functionality:
 
 1. Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer.
 2. Delete questions.
@@ -12,7 +12,7 @@ This project is a trivia game where users can test their knowledge in different 
 
 ### Installing Dependencies
 
-Development for this project requires Python 3.6 or later, Nodejs, pip and the Node Package Manager (NPM) to be already installed.
+Development for this project requires **Python 3.6** or later, **Nodejs**, **pip** and the Node Package Manager (**NPM**) to be already installed.
 
 #### Frontend Dependencies
 
