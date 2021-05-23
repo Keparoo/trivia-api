@@ -1,7 +1,4 @@
-# Full Stack API Final Project
-
-
-## Full Stack Trivia
+# Full Stack Trivia API Project
 
 This project is a trivia game where users can test their knowledge in different trivia categories: Science, Art, Geography, History, Entertainment, and Sports. The goal of this project was to complete a RESTful API, test suite and documentation that implements the following functionality:
 
@@ -10,37 +7,37 @@ This project is a trivia game where users can test their knowledge in different 
 3. Add questions and require that they include question and answer text.
 4. Search for questions based on a text query string.
 5. Play the quiz game, randomizing either all questions or within a specific category.
-
-
-## Getting Started
 ---
+## Getting Started
+
 ### Installing Dependencies
 
-Developers of this project should have Python 3.6 or later, Nodejs, pip and the Node Package Manager (NPM) already installed.
+Development for this project requires Python 3.6 or later, Nodejs, pip and the Node Package Manager (NPM) to be already installed.
 
 #### Frontend Dependencies
 
-This project uses NPM to manage software dependencies. NPM relies on the package.json file located in the /frontend directory of this repository. After cloning, open your terminal and run:
+This project uses NPM to manage software dependencies. The required dependencies are found in the `/frontend/package.json` file located of this repository. After cloning the repository, open your terminal navigate to the `/frontend` folder and run:
 
     npm install
 
 #### Backend Dependencies
 
-Setup and run a virtual environment, navigate to the /backend directory and run:
+Setup and run a Python 3.6 or later virtual environment, navigate to the `/backend` directory and run:
 
     pip install -r requirements.txt
 
-### Running Your Frontend in Dev Mode
+### Running Your Frontend in Developer Mode
 
-The frontend app was built using create-react-app. In order to run the app in development mode use npm start. You can change the script in the package.json file.
+The frontend app was built using create-react-app. In order to run the app in development mode use `npm start`. The start script is located in `/frontend/package.json` file if you need to adapt it.
 
     npm start
 
-Open http://localhost:3000 to view it in the browser. The page will reload if you make edits.
+The frontend is hosted at `http://localhost:3000`  
+Open `http://localhost:3000` to view the web app in the browser. The page will automatically reload if you make edits.
 
 ### Running the Backend Server
 
-From within the /backend directory first ensure you are working using your created virtual environment.
+From within the `/backend` directory activate the virtual environment and run the backend server.
 
 To run the server, execute:
 
@@ -48,26 +45,28 @@ To run the server, execute:
     export FLASK_ENV=development
     flask run --reload
 
-The --reload flag will detect file changes and restart the server automatically.
+The `--reload` flag will detect file changes and restart the backend server automatically.
 
 ### Testing
 
-To run the tests, run: (The first time you run tests, omit the dropdb command)
+Tests are contained in the `/backend/test_flaskr.py` file.  
+To run the tests, execute:  
+(The first time you run tests, omit the dropdb command)
 
     dropdb trivia_test
     createdb trivia_test
     psql trivia_test < trivia.psql
     python test_flaskr.py
-
-## API Reference
 ---
+## API Reference
+
 ### Getting Started
-Base URL: This application is hosted locally. The backend is hosted at http://127.0.0.1:5000/
-Authentication: This application currently does not require authentication or API keys
+* Base URL: This application is hosted locally. The backend is hosted at `http://127.0.0.1:5000/` 
+* Authentication: This application currently does not require authentication or API keys
 
 ### Error Handling
 
-Errors are returned as JSON
+Errors are returned as a JSON object.
 
     {
         "success": False,
@@ -75,13 +74,12 @@ Errors are returned as JSON
         "message": "resource not found"
     }
 
-The API currently returns three types of errors:
+The API currently returns three classes of errors:
 
-* 400 – bad request  
+* 400 – bad request 
 * 404 – resource not found  
 * 422 – unprocessable
-
-
+---
 ### API Endpoints
 
 #### GET /categories
@@ -109,7 +107,7 @@ The API currently returns three types of errors:
 * Results are paginated 10 to a page
 * Returns a list of categories
 * Returns the total number of questions
-* Optional request argument: `page`
+* Optional URL request argument: `?page=`
 * Returns a success flag
 
 Test: `curl http://127.0.0.1:5000/questions`
@@ -203,7 +201,7 @@ Test: `curl http://127.0.0.1:5000/questions`
 #### DELETE /questions/\<int:id\>
 
 * Deletes a question from the database by id as a URL parameter
-* Returns the id of the deleten question if successful
+* Returns the id of the deleted question if successful
 * Returns a success flag
 
 Test: `curl http://127.0.0.1:5000/questions/3 -X DELETE`
@@ -216,13 +214,15 @@ Test: `curl http://127.0.0.1:5000/questions/3 -X DELETE`
 #### POST /questions
 
 This endpoint handles two functions:
-* If a search term is included in the request it will search questions returning all matches
-* If no search term is included it will create a new question and insert it into the database
+1. If a search term is included in the request it will search questions returning all matches
+2. If no search term is included it will create a new question and insert it into the database  
 
-1. Search term included in request:
+
+If a search term is included in the request, the endpoint:
 
 * Searches database for matching questions 
 * Returns a paginated JSON object with all matching questions (case insensitive)
+* Returns the total number of matching questions
 * Returns a success flag
 
 Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "name"}'`
@@ -249,7 +249,8 @@ Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: applicatio
       "total_questions": 2
     }
 
-2. If there is no search term in the request:
+If there is no search term in the request, the endpoint:
+
 * Creates a new question using the JSON parameters and inserts it into database
 * Returns the questions id
 * Returns a success flag
@@ -261,7 +262,7 @@ Test: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: applicatio
       "success": true
     }
   
-#### GET /categories/<int:id>/questions
+#### GET /categories/\<int:id>\/questions
 
 * Searches for questions matching the category id using URL parameters
 * Returns a paginated JSON object of matching questions
@@ -323,6 +324,6 @@ Test: `curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/
     }
 
 ### Authors
-Kep Kaeppeler is the author of the API (__init.py), test suite (test_flaskr.py) and this README.  
-All other project files, including the models and frontend, were created by Udacity as a project template for the Full Stack Web Developer Nanodegree.
+Kep Kaeppeler is the author of the backend API, test suite, and documentation including the `__init__.py`, `test_flaskr.py`, and this `README` file.  
+All other project files, including the models and frontend, were created by the Udacity team. This was meant as a project template for the Full Stack Web Developer Nanodegree.
   
